@@ -62,7 +62,9 @@
                                 <a class="nav-link text-white" href="{{ route('article.create') }}">新規投稿</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('user.show') }}">ホーム</a>
+                                <a class="nav-link text-white" href="{{ route('user.show', [Auth::user()->id]) }}">
+                                    ホーム
+                                </a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle  text-white" href="#" role="button"
@@ -72,7 +74,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                                document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -88,12 +90,29 @@
             </div>
         </nav>
 
+        @if (session()->has('message'))
+            <div id="toast" class="position-relative m-2">
+                <p class="position-absolute top-0 end-0 p-3 rounded-pill text-white bg-info bg-gradient">
+                    {{ session('message') }}
+                </p>
+            </div>
+        @endif
+
+
         <main class="py-4">
             @yield('content')
 
             @livewireScripts
         </main>
     </div>
+    <script>
+        if (document.getElementById('toast')) {
+            const toast = document.getElementById('toast');
+            setTimeout(function() {
+                toast.style.display = 'none';
+            }, 5000)
+        };
+    </script>
 </body>
 
 </html>

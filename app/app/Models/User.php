@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Article;
+use App\Models\FollowUser;
 
 class User extends Authenticatable
 {
@@ -18,6 +20,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -41,4 +44,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'follow_users', 'user_id', 'following_user_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follow_users', 'following_user_id', 'user_id');
+    }
 }
