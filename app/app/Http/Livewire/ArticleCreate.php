@@ -2,24 +2,34 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Article;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ArticleCreate extends Component
 {
     public $title;
     public $category;
-    public $comment;
+    public $content;
+    public $user = [];
 
-    protected $rulus = [
-        '$title' => 'required|max:50',
-        '$category' => 'required',
-        '$comment' => 'required|max:300'
+    protected $rules = [
+        'title' => 'required|max:50',
+        'category' => 'required',
+        'content' => 'required|max:255'
     ];
 
     public function store()
     {
         $this->validate();
-        session()->flash('message', '入力内容に誤りがあります');
+        session()->flash('message', '投稿しました');
+        Article::create([
+            'user_id' => Auth::id(),
+            'title' => $this->title,
+            'category' => $this->category,
+            'content' => $this->content,
+        ]);
+        return redirect(route('article.show'));
     }
 
     public function render()

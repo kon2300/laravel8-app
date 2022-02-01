@@ -25,10 +25,10 @@ Route::redirect('/', '/article/show');
 
 Route::get('/article/show', ArticleShow::class)->name('article.show');
 
-Route::get('/article/detail/{param?}', ArticleDetail::class)->name('article.detail');
+Route::get('/article/detail/{id}', ArticleDetail::class)->name('article.detail');
 
 Route::get("/article/create", ArticleCreate::class)->name("article.create");
 
-Route::get("/article/edit/{param?}", ArticleEdit::class)->name("article.edit");
+Route::get("/article/edit/{id}", ArticleEdit::class)->name("article.edit");
 
-Route::get("/user/show/{param?}", UserShow::class)->name("user.show");
+Route::get("/user/show/{id}", UserShow::class)->name("user.show");
