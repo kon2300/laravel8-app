@@ -107,11 +107,13 @@
         <div class="d-flex justify-content-center my-3">
             <h5 class="text-muted">投稿はまだありません</h5>
         </div>
-        <div class="d-flex justify-content-center my-3">
-            <button class="btn btn-dark bg-gradient">
-                <a class="text-white" href="{{ route('article.create') }}">投稿してみる</a>
-            </button>
-        </div>
+        @if ($user->id === Auth::id())
+            <div class="d-flex justify-content-center my-3">
+                <button class="btn btn-dark bg-gradient">
+                    <a class="text-white" href="{{ route('article.create') }}">投稿してみる</a>
+                </button>
+            </div>
+        @endif
     @else
         <div class="row row-cols-1 col-md-10 row-cols-md-2 g-4 mx-auto">
             @foreach ($user->articles as $article)

@@ -24,7 +24,7 @@
                         wire:model.defer="category">
                         <option selected>選択する</option>
                         <option value="fun">楽しい</option>
-                        <option value="ungly">怒り</option>
+                        <option value="angry">怒り</option>
                         <option value="sad">悲しい</option>
                     </select>
                     <label for="floatingSelect">カテゴリーを選択</label>

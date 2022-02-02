@@ -27,7 +27,7 @@ class ArticleShow extends Component
     {
         $this->search();
         return view('livewire.article-show', [
-            'articles' => $this->articles
+            'articles' => $this->articles,
         ])
             ->extends('layouts.app');
     }
@@ -56,6 +56,15 @@ class ArticleShow extends Component
     public function search()
     {
         $category = $this->category;
+
+        if ($category === 'fun') {
+            $this->result = '楽しい話';
+        } elseif($category === 'angry') {
+            $this->result = '怒った話';
+        } elseif($category === 'sad') {
+            $this->result = '悲しい話';
+        }
+
         if ($this->type === 'new' || $this->type === '') {
             $this->articles = Article::with('user', 'likes')->where('category','like', '%'.$category.'%')->latest()->paginate(6);
         } elseif ($this->type === 'old') {
@@ -65,13 +74,15 @@ class ArticleShow extends Component
         } elseif ($this->type === 'few') {
             $this->articles = Article::withCount('user', 'likes')->where('category','like', '%'.$category.'%')->orderBy('likes_count', 'asc')->paginate(6);
         }
+    }
 
-        if ($this->category === 'fun') {
-            $this->result = '楽しい';
-        } elseif($this->category === 'ungry') {
-            $this->result = '怒り';
-        } elseif($this->category === 'sad') {
-            $this->result = '悲しい';
-        }
+    public function updatingCategory()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingType()
+    {
+        $this->resetPage();
     }
 }
