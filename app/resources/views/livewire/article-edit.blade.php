@@ -32,9 +32,9 @@
                     <select class="form-select" id="floatingSelect" aria-label="category select"
                         wire:model.defer="category">
                         <option selected>選択する</option>
-                        <option value="fun">fun</option>
-                        <option value="ungly">ungly</option>
-                        <option value="sad">sad</option>
+                        <option value="fun">楽しい</option>
+                        <option value="angry">怒り</option>
+                        <option value="sad">悲しい</option>
                     </select>
                     <label for="floatingSelect">カテゴリーを選択</label>
                     @error('category')
