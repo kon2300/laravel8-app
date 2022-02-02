@@ -33,6 +33,7 @@
                         </a>
                     </p>
                     <p class="card-title h7">{{ $article->updated_at }}</p>
+
                     @if ($article->user_id === Auth::id())
                         <button
                             class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative">
@@ -71,7 +72,7 @@
                                     {{ $article->likes->count() }}
                                 </span>
                             </button>
-                        @elseif ($like->user_id !== Auth::id())
+                        @elseif ($like->user_id !== Auth::id() && $article->user_id !== Auth::id())
                             <button
                                 class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative"
                                 wire:click.prevent="like({{ $article }})">
