@@ -17,6 +17,7 @@ class UserShow extends Component
         $this->user = User::with('articles.likes')->where('id', $id)->first();
         $this->followers = FollowUser::where('following_user_id', $id)->with('followings')->get();
         $this->followings = FollowUser::where('user_id', $id)->with('followers')->get();
+        $this->checkFollow = FollowUser::where('user_id', Auth::id())->Where('following_user_id', $id)->get();
     }
 
     public function render()
@@ -35,11 +36,11 @@ class UserShow extends Component
         $this->mount($id);
     }
 
-    public function removeFollow($follower)
+    public function removeFollow($check)
     {
-        $following_id = $follower['id'];
+        $following_id = $check['id'];
         FollowUser::destroy($following_id);
-        $id = $follower['following_user_id'];
+        $id = $check['following_user_id'];
         $this->mount($id);
     }
 
