@@ -18,17 +18,20 @@ use App\Http\Livewire\UserShow;
 |
 */
 
-
 Auth::routes();
 
 Route::redirect('/', '/article/show');
 
 Route::get('/article/show', ArticleShow::class)->name('article.show');
 
-Route::get('/article/detail/{id}', ArticleDetail::class)->name('article.detail');
+Route::group(['middleware' => ['auth']], function () {
 
-Route::get("/article/create", ArticleCreate::class)->name("article.create");
+    Route::get('/article/detail/{id}', ArticleDetail::class)->name('article.detail');
 
-Route::get("/article/edit/{id}", ArticleEdit::class)->name("article.edit");
+    Route::get("/article/create", ArticleCreate::class)->name("article.create");
 
-Route::get("/user/show/{id}", UserShow::class)->name("user.show");
+    Route::get("/article/edit/{id}", ArticleEdit::class)->name("article.edit");
+
+    Route::get("/user/show/{id}", UserShow::class)->name("user.show");
+
+});
