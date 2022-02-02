@@ -2,13 +2,6 @@
     <div class="row">
         <div class="col-md-6 text-center text-md-end mt-2">
             <p class="fs-3"><span>@</span>{{ $user->name }} </p>
-            @if ($user->id !== Auth::id() && $followers->isEmpty())
-                <p>
-                    <button wire:click.prevent="follow({{ $user }})" class="btn btn-info rounded-pill">
-                        フォロー<i class="fas fa-user-plus"></i>
-                    </button>
-                </p>
-            @endif
 
             @if ($user->id !== Auth::id() && $checkFollow->isEmpty())
                 <button wire:click.prevent="follow({{ $user }})" class="btn btn-info rounded-pill">
@@ -181,7 +174,7 @@
                                             {{ $article->likes->count() }}
                                         </span>
                                     </button>
-                                @elseif ($like->user_id !== Auth::id())
+                                @elseif ($like->user_id !== Auth::id() && $article->user_id !== Auth::id())
                                     <button
                                         class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative"
                                         wire:click.prevent="like({{ $article }})">
