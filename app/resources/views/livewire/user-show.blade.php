@@ -9,18 +9,19 @@
                     </button>
                 </p>
             @endif
-            @foreach ($followers as $follower)
-                @switch ($follower->followings->id)
-                    @case(Auth::id())
-                        <button wire:click.prevent="removeFollow({{ $follower }})" class="btn btn-danger rounded-pill">
-                            アンフォロー <i class="fas fa-user-minus"></i>
-                        </button>
-                    @break
-                    @default
-                        <button wire:click.prevent="follow({{ $user }})" class="btn btn-info rounded-pill">
-                            フォロー<i class="fas fa-user-plus"></i>
-                        </button>
-                @endswitch
+
+            @if ($user->id !== Auth::id() && $checkFollow->isEmpty())
+                <button wire:click.prevent="follow({{ $user }})" class="btn btn-info rounded-pill">
+                    フォロー<i class="fas fa-user-plus"></i>
+                </button>
+            @endif
+
+            @foreach ($checkFollow as $check)
+                @if ($checkFollow)
+                    <button wire:click.prevent="removeFollow({{ $check }})" class="btn btn-danger rounded-pill">
+                        アンフォロー <i class="fas fa-user-minus"></i>
+                    </button>
+                @endif
             @endforeach
         </div>
 
@@ -141,6 +142,7 @@
                                 </a>
                             </p>
                             <p class="card-title h7">{{ $article->updated_at }}</p>
+
                             @if ($article->user_id === Auth::id())
                                 <button
                                     class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative">
@@ -154,7 +156,9 @@
                                         自分の投稿
                                     </span>
                                 </button>
-                            @elseif ($article->likes->isEmpty())
+                            @endif
+
+                            @if ($article->likes->isEmpty() && $article->user_id !== Auth::id())
                                 <button
                                     class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative"
                                     wire:click.prevent="like({{ $article }})">
@@ -164,31 +168,31 @@
                                         {{ $article->likes->count() }}
                                     </span>
                                 </button>
-                            @else
-                                @foreach ($article->likes as $like)
-                                    @if ($like->user_id === Auth::id())
-                                        <button
-                                            class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative"
-                                            wire:click.prevent="removeLike({{ $article }})">
-                                            Like <i class="fas fa-heart"></i>
-                                            <span
-                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger bg-gradient">
-                                                {{ $article->likes->count() }}
-                                            </span>
-                                        </button>
-                                    @elseif ($like->user_id !== Auth::id())
-                                        <button
-                                            class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative"
-                                            wire:click.prevent="like({{ $article }})">
-                                            Like <i class="far fa-heart"></i>
-                                            <span
-                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger bg-gradient">
-                                                {{ $article->likes->count() }}
-                                            </span>
-                                        </button>
-                                    @endif
-                                @endforeach
                             @endif
+
+                            @foreach ($article->likes as $like)
+                                @if ($like->user_id === Auth::id())
+                                    <button
+                                        class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative"
+                                        wire:click.prevent="removeLike({{ $article }})">
+                                        Like <i class="fas fa-heart"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger bg-gradient">
+                                            {{ $article->likes->count() }}
+                                        </span>
+                                    </button>
+                                @elseif ($like->user_id !== Auth::id())
+                                    <button
+                                        class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative"
+                                        wire:click.prevent="like({{ $article }})">
+                                        Like <i class="far fa-heart"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger bg-gradient">
+                                            {{ $article->likes->count() }}
+                                        </span>
+                                    </button>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
