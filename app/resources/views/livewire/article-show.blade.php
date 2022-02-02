@@ -76,7 +76,17 @@
                             </a>
                         </p>
                         <p class="card-title h7">{{ $article->updated_at }}</p>
-                        @if ($article->user_id === Auth::id())
+                        @if (!Auth::check())
+                            <button
+                                class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative"
+                                wire:click.prevent="like({{ $article }})" disabled>
+                                Like <i class="far fa-heart"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger bg-gradient">
+                                    {{ $article->likes->count() }}
+                                </span>
+                            </button>
+                        @elseif ($article->user_id === Auth::id())
                             <button
                                 class="btn shadow rounded-pill bg-white text-danger btn-outline-danger position-absolute bottom-0 end-0  position-relative">
                                 Like <i class="fas fa-heart"></i>

@@ -6,6 +6,7 @@ use App\Http\Livewire\ArticleDetail;
 use App\Http\Livewire\ArticleCreate;
 use App\Http\Livewire\ArticleEdit;
 use App\Http\Livewire\UserShow;
+use App\Http\Livewire\UserEdit;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/article/edit/{id}", ArticleEdit::class)->name("article.edit");
 
     Route::get("/user/show/{id}", UserShow::class)->name("user.show");
+
+    Route::get("/user/edit/{id}", UserEdit::class)->name("user.edit");
 
 });

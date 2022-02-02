@@ -47,14 +47,14 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-white" href="{{ route('login') }}">{{ __('ログイン') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link text-white"
-                                        href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        href="{{ route('register') }}">{{ __('新規登録') }}</a>
                                 </li>
                             @endif
                         @else
@@ -62,7 +62,7 @@
                                 <a class="nav-link text-white" href="{{ route('article.create') }}">新規投稿</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('user.show', [Auth::user()->id]) }}">
+                                <a class="nav-link text-white" href="{{ route('user.show', [Auth::id()]) }}">
                                     ホーム
                                 </a>
                             </li>
@@ -73,9 +73,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('user.edit', [Auth::id()]) }}">
+                                        {{ __('アカウント') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        document.getElementById('logout-form').submit();">
+                                        {{ __('ログアウト') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
