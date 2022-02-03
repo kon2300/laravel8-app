@@ -78,7 +78,7 @@
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
+                                            document.getElementById('logout-form').submit();">
                                         {{ __('ログアウト') }}
                                     </a>
 
@@ -109,6 +109,15 @@
             @livewireScripts
         </main>
     </div>
+
+    <footer class="footer bg-black bg-gradient shadow-sm p-3">
+        <div class="text-center">
+            <a class="navbar-brand text-white" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+        </div>
+    </footer>
+
     <script>
         if (document.getElementById('toast')) {
             const toast = document.getElementById('toast');
